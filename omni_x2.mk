@@ -23,12 +23,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_PACKAGES += \
-    charger_res_images \
-    charger
-
+# Time Zone data for Recovery
 PRODUCT_COPY_FILES += \
-    device/leeco/x2/kernel:kernel
+    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 
 PRODUCT_NAME := omni_x2
 PRODUCT_DEVICE := x2

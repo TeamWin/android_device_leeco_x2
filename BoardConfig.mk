@@ -21,44 +21,35 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
-#TARGET_CPU_SMP := true
-#ARCH_ARM_HAVE_TLS_REGISTER := true
-
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff androidboot.selinux=permissive
 
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
+TARGET_PREBUILT_KERNEL := device/leeco/x2/kernel
+TARGET_RECOVERY_FSTAB := device/leeco/x2/recovery/root/etc/twrp.fstab
 
 # /proc/partitions * 2 * BLOCK_SIZE (512) = size in bytes
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967296
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 58139029504
-BOARD_FLASH_BLOCK_SIZE := 131072
-#BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+BOARD_FLASH_BLOCK_SIZE := 4096
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 
-# prebuilt kernel
-TARGET_PREBUILT_KERNEL := device/leeco/x2/kernel
-TARGET_RECOVERY_FSTAB := device/leeco/x2/recovery/root/etc/twrp.fstab
-
-
+BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-
-#TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
+BOARD_SUPPRESS_SECURE_ERASE := true
 
 # TWRP
 TW_THEME := portrait_hdpi
-#TW_INCLUDE_CRYPTO := true
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-#TWHAVE_SELINUX := true
-#BOARD_SUPPRESS_SECURE_ERASE := true
+BOARD_HAS_NO_REAL_SDCARD := true
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
-BOARD_RECOVERY_SWIPE := true
-#BOARD_HAS_LARGE_FILESYSTEM := true
-#TW_TARGET_USES_QCOM_BSP := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+
+# Debug flags
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
