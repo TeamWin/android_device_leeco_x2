@@ -5,7 +5,9 @@
 /data           ext4    /dev/block/bootdevice/by-name/userdata  flags=encryptable=footer;length=-16384	 
 /boot           emmc    /dev/block/bootdevice/by-name/boot
 /recovery       emmc    /dev/block/bootdevice/by-name/recovery  flags=backup=1
-/misc           emmc    /dev/block/bootdevice/by-name/misc			
+/misc           emmc    /dev/block/bootdevice/by-name/misc
+/efs1			emmc	/dev/block/bootdevice/by-name/modemst1  flags=backup=1;display=EFS
+/efs2			emmc	/dev/block/bootdevice/by-name/modemst2  flags=backup=1;subpartitionof=/efs1
 
 # Removable storage
-/usb_otg	      vfat	/dev/block/sda1				    /dev/block/sda	    flags=storage;wipeingui;removable
+/usbstorage	      vfat  /dev/block/sdd1				    /dev/block/sdd	    flags=display="USB Storage";storage;wipeingui;removable
