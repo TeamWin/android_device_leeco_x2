@@ -6,8 +6,9 @@
 /boot           emmc    /dev/block/bootdevice/by-name/boot
 /recovery       emmc    /dev/block/bootdevice/by-name/recovery  flags=backup=1
 /misc           emmc    /dev/block/bootdevice/by-name/misc
-/efs1			emmc	/dev/block/bootdevice/by-name/modemst1  flags=backup=1;display=EFS
-/efs2			emmc	/dev/block/bootdevice/by-name/modemst2  flags=backup=1;subpartitionof=/efs1
+/efs1		        emmc    /dev/block/bootdevice/by-name/modemst1  flags=backup=1;display=EFS
+/efs2		     	  emmc    /dev/block/bootdevice/by-name/modemst2  flags=backup=1;subpartitionof=/efs1
+/firmware       vfat    /dev/block/bootdevice/by-name/modem     flags=backup=1;display="Firmware"
 
 # Removable storage
 /usbstorage	      vfat  /dev/block/sdd1				    /dev/block/sdd	    flags=display="USB Storage";storage;wipeingui;removable
