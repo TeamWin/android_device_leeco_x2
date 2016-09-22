@@ -1,14 +1,14 @@
 # mount point   fstype  device					device2			flags
-/system         ext4    /dev/block/bootdevice/by-name/system
+/system         ext4    /dev/block/bootdevice/by-name/system    flags=display="System";mounttodecrypt;
 /system_image   emmc    /dev/block/bootdevice/by-name/system    flags=flashimg=1
 /cache          ext4    /dev/block/bootdevice/by-name/cache
 /data           ext4    /dev/block/bootdevice/by-name/userdata  flags=encryptable=footer;length=-16384	 
 /boot           emmc    /dev/block/bootdevice/by-name/boot
 /recovery       emmc    /dev/block/bootdevice/by-name/recovery  flags=backup=1
 /misc           emmc    /dev/block/bootdevice/by-name/misc
-/efs1           emmc    /dev/block/bootdevice/by-name/modemst1  flags=backup=1;display=EFS
-/efs2           emmc    /dev/block/bootdevice/by-name/modemst2  flags=backup=1;subpartitionof=/efs1
-/firmware       vfat    /dev/block/bootdevice/by-name/modem     flags=backup=1;display="Firmware"
+/efs1           emmc    /dev/block/bootdevice/by-name/modemst1  flags=backup=1;display=EFS;mounttodecrypt;
+/efs2           emmc    /dev/block/bootdevice/by-name/modemst2  flags=backup=1;subpartitionof=/efs1;mounttodecrypt;
+/firmware       vfat    /dev/block/bootdevice/by-name/modem     flags=backup=1;display="Firmware";mounttodecrypt;
 
 # Removable storage
 /usbstorage     vfat    /dev/block/sdd1     /dev/block/sdd	    flags=display="USB Storage";storage;wipeingui;removable

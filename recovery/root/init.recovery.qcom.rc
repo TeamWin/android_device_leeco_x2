@@ -1,0 +1,60 @@
+# separate copy needed to use /sbin/linker64 instead of /system/bin/linker64
+service sbinqseecomd /sbin/qseecomd
+    oneshot
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
+service pulldecryptfiles /sbin/pulldecryptfiles.sh
+    oneshot
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
+service createsym /sbin/createsym.sh
+    oneshot
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
+on early-init
+    mkdir /firmware 0771 system system
+
+on fs
+    # needed to make qseecomd work in recovery
+    start createsym
+    
+    chmod 0664 /dev/qseecom
+    chown system drmrpc /dev/qseecom
+    chmod 0664 /dev/ion
+    chown system system /dev/ion
+    
+    wait /dev/block/bootdevice/by-name/cache
+    mount ext4 /dev/block/bootdevice/by-name/cache /cache nosuid nodev barrier=1
+
+    wait /dev/block/bootdevice/by-name/persist
+    mount ext4 /dev/block/bootdevice/by-name/persist /persist nosuid nodev barrier=1
+    restorecon_recursive /persist
+    mkdir /persist/data 0700 system system
+
+    wait /dev/block/bootdevice/by-name/dsp
+    mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro nosuid nodev barrier=1
+
+    wait /dev/block/bootdevice/by-name/modem
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0
+
+    wait /dev/block/bootdevice/by-name/bluetooth
+    mount vfat /dev/block/bootdevice/by-name/bluetooth /bt_firmware ro shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0
+    
+    start pulldecryptfiles
+    
+    symlink /firmware/image /vendor/firmware
+
+on property:ro.crypto.state=encrypted
+    start sbinqseecomd
+
+on property:ro.crypto.fs_crypto_blkdev=/dev/block/dm-0
+    stop sbinqseecomd
