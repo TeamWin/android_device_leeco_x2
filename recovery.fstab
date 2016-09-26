@@ -11,4 +11,4 @@
 /firmware       vfat    /dev/block/bootdevice/by-name/modem     flags=backup=1;display="Firmware";mounttodecrypt;
 
 # Removable storage
-/usbstorage     vfat    /dev/block/sdd1     /dev/block/sdd	    flags=display="USB Storage";storage;wipeingui;removable
+/usbstorage     auto    /dev/block/sdg1          /dev/block/sdg     flags=display="USB OTG";storage;wipeingui;removable;
