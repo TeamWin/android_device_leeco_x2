@@ -7,8 +7,8 @@
   },
   {
     "remote":"github",
-    "repository": "LineageOS/android_kernel_leeco_msm8996",
+    "repository": "omnirom/android_kernel_leeco_msm8996/",
     "target_path": "kernel/leeco/msm8996",
-    "revision":"cm-14.1"
+    "revision":"android-7.1"
   }
 ]
