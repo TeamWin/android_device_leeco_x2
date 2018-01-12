@@ -4,11 +4,5 @@
     "repository": "TeamWin/android_device_qcom_common",
     "target_path": "device/qcom/common",
     "revision":"android-7.1"
-  },
-  {
-    "remote":"github",
-    "repository": "LineageOS/android_kernel_leeco_msm8996",
-    "target_path": "kernel/leeco/msm8996",
-    "revision":"cm-14.1"
   }
 ]
