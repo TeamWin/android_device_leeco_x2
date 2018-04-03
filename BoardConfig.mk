@@ -31,7 +31,7 @@ BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x02000000
 BOARD_RAMDISK_OFFSET     := 0x02200000
-TARGET_PREBUILT_KERNEL := device/leeco/zl1/prebuilt/Image.gz-dtb
+TARGET_PREBUILT_KERNEL := device/leeco/x2/prebuilt/Image.gz-dtb
 
 # /proc/partitions * 2 * BLOCK_SIZE (512) = size in bytes
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -49,7 +49,7 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_USES_ION := true
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xhdpi
+PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
 
 # Full disk encryption
 TARGET_HW_DISK_ENCRYPTION := true
