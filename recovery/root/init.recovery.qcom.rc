@@ -1,60 +1,77 @@
-# separate copy needed to use /sbin/linker64 instead of /system/bin/linker64
-service sbinqseecomd /sbin/qseecomd
-    oneshot
-    disabled
-    user root
-    group root
-    seclabel u:r:recovery:s0
-
-service pulldecryptfiles /sbin/pulldecryptfiles.sh
-    oneshot
-    disabled
-    user root
-    group root
-    seclabel u:r:recovery:s0
-
-service createsym /sbin/createsym.sh
-    oneshot
-    disabled
-    user root
-    group root
-    seclabel u:r:recovery:s0
-
 on early-init
     mkdir /firmware 0771 system system
 
 on fs
-    # needed to make qseecomd work in recovery
-    start createsym
-    
-    chmod 0664 /dev/qseecom
+    wait /dev/block/platform/soc/624000.ufshc
+    symlink /dev/block/platform/soc/624000.ufshc /dev/block/bootdevice
+    chmod 0660 /dev/qseecom
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
     chown system system /dev/ion
-    
-    wait /dev/block/bootdevice/by-name/cache
-    mount ext4 /dev/block/bootdevice/by-name/cache /cache nosuid nodev barrier=1
+    install_keyring
 
     wait /dev/block/bootdevice/by-name/persist
     mount ext4 /dev/block/bootdevice/by-name/persist /persist nosuid nodev barrier=1
     restorecon_recursive /persist
     mkdir /persist/data 0700 system system
 
-    wait /dev/block/bootdevice/by-name/dsp
-    mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro nosuid nodev barrier=1
-
     wait /dev/block/bootdevice/by-name/modem
     mount vfat /dev/block/bootdevice/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0
-
-    wait /dev/block/bootdevice/by-name/bluetooth
-    mount vfat /dev/block/bootdevice/by-name/bluetooth /bt_firmware ro shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0
-    
-    start pulldecryptfiles
-    
     symlink /firmware/image /vendor/firmware
 
-on property:ro.crypto.state=encrypted
+    setprop crypto.ready 1
+
+# Separate copy needed to use /sbin/linker64 instead of /system/bin/linker64
+service sbinqseecomd /sbin/qseecomd
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service hwservicemanager /sbin/hwservicemanager
+    user root
+    group root
+    disabled
+    onrestart setprop hwservicemanager.ready false
+    seclabel u:r:recovery:s0
+
+service servicemanager /sbin/servicemanager
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore_auth /sbin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /sbin/keystore /data/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /sbin/android.hardware.gatekeeper@1.0-service
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+
+on property:crypto.ready=0
+    stop sbinqseecomd
+    stop gatekeeper-1-0
+    stop hwservicemanager
+    stop keystore
+    stop servicemanager
+
+on property:crypto.ready=1
     start sbinqseecomd
 
-on property:ro.crypto.fs_crypto_blkdev=/dev/block/dm-0
-    stop sbinqseecomd
+on property:sys.listeners.registered=true
+    start hwservicemanager
+    start gatekeeper-1-0
+    start servicemanager
