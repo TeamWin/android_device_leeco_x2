@@ -14,25 +14,21 @@
 # limitations under the License.
 #
 
-# Get the prebuilt list of APNs
-$(call inherit-product, vendor/omni/config/gsm.mk)
+# Release name
+PRODUCT_RELEASE_NAME := zl1
 
-# Inherit from the common Open Source product configuration
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, build/target/product/embedded.mk)
 
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
-# Time Zone data for Recovery
-PRODUCT_COPY_FILES += \
-    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
-
-PRODUCT_NAME := omni_x2
-PRODUCT_DEVICE := x2
+## Device identifier. This must come after all inclusions
+PRODUCT_NAME := omni_zl1
+PRODUCT_DEVICE := zl1
 PRODUCT_BRAND := leeco
-PRODUCT_MODEL := x2
+PRODUCT_MODEL := LEX727
 PRODUCT_MANUFACTURER := leeco
 
-TARGET_VENDOR_PRODUCT_NAME := LeMax2
-TARGET_VENDOR_DEVICE_NAME := le_x2
-PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=le_x2 PRODUCT_NAME=LeMax2
+TARGET_VENDOR_PRODUCT_NAME := ZL1_NA
+TARGET_VENDOR_DEVICE_NAME := le_zl1
+PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=le_zl1 PRODUCT_NAME=ZL1_NA

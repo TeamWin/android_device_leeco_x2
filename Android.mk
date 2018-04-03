@@ -14,12 +14,10 @@
 # limitations under the License.
 #
 
+ifneq ($(filter zl1,$(TARGET_DEVICE)),)
+
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),x2)
-
 include $(call all-makefiles-under,$(LOCAL_PATH))
-
-include $(CLEAR_VARS)
 
 endif
