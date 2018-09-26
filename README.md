@@ -2,7 +2,7 @@ TWRP device configuration for LeEco Le Max 2
 ==============
 
 kernel source used for prebuilt kernel:
-https://github.com/LineageOS/android_kernel_leeco_msm8996/tree/lineage-15.1
+https://github.com/LineageOS/android_kernel_leeco_msm8996/
 
 
 To compile android-8.1 based TWRP
