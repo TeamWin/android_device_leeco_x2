@@ -24,6 +24,7 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 # Crypto
 TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 TARGET_HW_DISK_ENCRYPTION := true
+PLATFORM_SECURITY_PATCH := 2099-12-31
 
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom 
