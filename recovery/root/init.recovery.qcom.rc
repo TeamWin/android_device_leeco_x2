@@ -10,8 +10,6 @@ on fs
     chown system system /dev/ion
     install_keyring
 
-    wait /dev/block/bootdevice/by-name/persist
-    mount ext4 /dev/block/bootdevice/by-name/persist /persist nosuid nodev barrier=1
     restorecon_recursive /persist
     mkdir /persist/data 0700 system system
 
