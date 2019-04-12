@@ -10,11 +10,8 @@ on fs
     chown system system /dev/ion
     install_keyring
 
-    restorecon_recursive /persist
     mkdir /persist/data 0700 system system
-
-    wait /dev/block/bootdevice/by-name/modem
-    symlink /firmware/image /vendor/firmware
+    restorecon_recursive /persist
 
     setprop crypto.ready 1
 
