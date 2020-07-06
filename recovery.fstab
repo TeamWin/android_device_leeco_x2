@@ -9,6 +9,7 @@
 /firmware           vfat    /dev/block/bootdevice/by-name/modem             flags=backup=1;display="Firmware"
 /misc               emmc    /dev/block/bootdevice/by-name/misc
 /persist            ext4    /dev/block/bootdevice/by-name/persist           flags=display="Persist"
+/persist_image      emmc    /dev/block/bootdevice/by-name/persist           flags=backup=1;flashimg=1;display="Persist Image"
 /recovery           emmc    /dev/block/bootdevice/by-name/recovery          flags=backup=1
 /system             ext4    /dev/block/bootdevice/by-name/system
 /system_image       emmc    /dev/block/bootdevice/by-name/system
